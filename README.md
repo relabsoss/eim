@@ -10,7 +10,7 @@ means you'd need to monitor/handle said crashes.
 # Compile #
 Checked on Ubuntu Linux 18.04 LTS:
 
-    sudo apt-get install libmagickwand-6.q16-dev
+    sudo apt-get install pkg-config libmagickwand-6.q16-dev
     rebar3 compile
 
 # Examples #
