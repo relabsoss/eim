@@ -1,6 +1,10 @@
 .DS_Store
 c_src/*.o
+c_src/*.d
 priv/*.so
-.eunit
-ebin/*.beam
-ebin/*.app
+*.beam
+
+_build
+rebar3
+rebar.lock
+*.crashdump

@@ -22,7 +22,6 @@
 -module(eim).
 -author('Steven Gravell <steve@mokele.co.uk>').
 -export([load/1, derive/3]).
--export([go/0]).
 -on_load(init/0).
 
 -ifdef(TEST).
@@ -32,9 +31,9 @@
 init() ->
     SoName = case code:priv_dir(eim) of
         {error, bad_name} ->
-            filename:join("../priv", "eim_nifs");
+            filename:join([filename:dirname(code:which(?MODULE)), "..", "priv", "eim"]);
         Dir ->
-            filename:join(Dir, "eim_nifs")
+            filename:join(Dir, "eim")
     end,
     erlang:load_nif(SoName, 0).
 
@@ -71,30 +70,6 @@ do_derive(_Image, _Fmt, _Deriv) ->
 
 all_test() ->
     error = load(<<>>),
-    %% not a test, just for debugging's sake below
-    %io:format("Res: ~p~n", [Res])
-    %{ok, Image} = load(element(2,file:read_file("../priv/images/09052008181.jpg"))),
-    %ok = file:write_file("../priv/out.jpg", derive(Image, jpg, [{box,100,100,left,center}])),
-    %{ok, Riak} = riakc_pb_socket:start_link("127.0.0.1", 8087),
-    %Bucket = <<"images">>,
-    %Obj1 = riakc_obj:new(Bucket, <<"10.jpg">>, derive(Resource, {fit, 100, 310}), "image/jpg"),
-    %ok = riakc_pb_socket:put(Riak, Obj1)
     ok.
 
 -endif.
-
-
-go() ->
-    lists:foreach(fun img/1, filelib:wildcard("../priv/images/*.{jpg,jpeg,gif,png}")),
-    go().%forever
-
-img(File) ->
-    case eim:load(element(2,file:read_file(File))) of
-        {ok, Image} ->
-            ThumbFile = "../priv/thumbs/"++filename:basename(File),
-            file:write_file(ThumbFile, derive(Image, png, {box,100,100,center,center}));
-        error ->
-            io:format("Error: ~p~n", [File])
-    end.
-
-

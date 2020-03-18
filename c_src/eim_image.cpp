@@ -239,11 +239,13 @@ public:
         reorientate();
         MagickStripImage(magick_wand);
         
-        status = MagickSetImageFormat(magick_wand, "jpg");
+        // status = MagickSetImageFormat(magick_wand, "jpg");
         // MagickWand * old_img = magick_wand;
         magick_wand = MagickMergeImageLayers(magick_wand, FlattenLayer);
+        
         // MagickDestroyImage(old_img);
-/*        switch(fmt)
+        
+        switch(fmt)
         {
             case EIM_FORMAT_JPG:
                 status=MagickSetImageFormat(magick_wand, "jpg");
@@ -255,7 +257,7 @@ public:
             default:
                 status=MagickSetImageFormat(magick_wand, "png");
                 break;
-        }*/
+        }
         if (status == MagickFalse) {
             throw("An error occured");
         }

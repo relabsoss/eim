@@ -7,6 +7,12 @@ basic manipulation functionality.
 Due to the nature of NIFs if they crash the whole node goes down, which 
 means you'd need to monitor/handle said crashes.
 
+# Compile #
+Checked on Ubuntu Linux 18.04 LTS:
+
+    sudo apt-get install libmagickwand-6.q16-dev
+    rebar3 compile
+
 # Examples #
 A photo hosting service which primarily deals with photographs of people 
 may create these derivations of uploaded images:
@@ -87,5 +93,4 @@ results in either
     % NewWidth =:= Width and NewHeight =< Height
     % or NewHeight =:= Height and NewWidth =< Width
     {fit, Width, Height}
-
 

@@ -1,0 +1,13 @@
+{CFlags, LDFlags} = lists:foldl(fun(Name, {CF, LDF}) ->
+    {
+      CF ++ " " ++ string:trim(os:cmd("pkg-config --cflags " ++ Name)),
+      LDF ++ " " ++ string:trim(os:cmd("pkg-config --libs " ++ Name))
+    }
+  end, {"$CXXFLAGS", "$LDFLAGS -L/usr/lib -lstdc++"}, ["ImageMagick", "MagickWand"]).
+
+CONFIG ++ [
+  {port_env, [
+    {".*", "CXXFLAGS", CFlags},
+    {".*", "LDFLAGS", LDFlags}
+  ]}
+].
